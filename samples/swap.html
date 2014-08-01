@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="./css/samples.css">
+		<script type="text/javascript" src="../../requirejs/require.js" data-main="../../"></script>
+		<script type="text/javascript">
+	require(["liaison-build/boot"], function(){
+			require([
+				"liaison/wrapper",
+				"liaison/DOMTreeBindingTarget"
+			], function(wrapper){
+				function startup(){
+					var model;
+
+					document.getElementById("main-template").bind("bind", model = wrapper.wrap({
+						data: [
+							{
+								title: "Model1",
+								names: [
+									{
+										First: "Anne1",
+										Last: "Ackerman1"
+									},
+									{
+										First: "Ben1",
+										Last: "Beckham1"
+									},
+									{
+										First: "Chad1",
+										Last: "Chapman1"
+									}
+								]
+							},
+							{
+								title: "Model2",
+								names: [
+									{
+										First: "Anne2",
+										Last: "Ackerman2"
+									},
+									{
+										First: "Ben2",
+										Last: "Beckham2"
+									}
+								]
+							},
+							{
+								title: "Model3",
+								names: [
+									{
+										First: "Anne3",
+										Last: "Ackerman3"
+									}
+								]
+							}
+						],
+						select: function(event, detail, sender){
+							this.set("current", this.data.filter(function(entry){
+								return entry.title == sender.value;
+							})[0].names);
+						}
+					}));
+
+					model.set("current", model.data[0].names);
+				}
+
+				document.body ? startup() : window.addEventListener("DOMContentLoaded", startup);
+			});
+		
+	});
+	</script>
+	</head>
+	<body>
+		<template id="main-template">
+			<div>
+				<select on-change="{{select}}">
+					<option template repeat="{{data}}" value="{{title}}">{{title}}</option>
+				</select>
+			</div>
+			<template repeat="{{current}}">
+				<div>First: <input type="text" value="{{First}}"></div>
+				<div>Last: <input type="text" value="{{Last}}"></div>
+			</template>
+		</template>
+	</body>
+</html>

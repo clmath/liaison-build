@@ -1,0 +1,18 @@
+{
+  "name": "liaison-build",
+  "version": "0.1.1-dev",
+  "dependencies": {
+    "requirejs": "2.1.x",
+    "decor-build": "0.2.0-dev"
+  },
+  "ignore": [
+    ".jshintrc",
+    ".gitattributes",
+    ".travis.yml",
+    "tests",
+    "CONTRIBUTING.md"
+  ],
+  "devDependencies": {
+    "liaison": "0.1.1-dev"
+  }
+}
