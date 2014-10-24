@@ -7,6 +7,10 @@ require.config({
 			"location": "liaison-build/delite"
 		},
 		{
+			"name": "liaison",
+			"location": "liaison-build"
+		},
+		{
 			"name": "decor",
 			"location": "decor-build"
 		},
@@ -16,4 +20,4 @@ require.config({
 		}
 	]
 });
-define("liaison-build/delite/layer", ["decor-build/layer","delite-build/layer"], function(){});
+define("liaison-build/delite/layer", ["liaison-build/layer","decor-build/layer","delite-build/layer"], function(){});
