@@ -3,8 +3,8 @@ define("liaison/delite/WidgetBindingTarget",["decor/Observable","delite/register
 require.config({
 	"packages": [
 		{
-			"name": "liaison-delite",
-			"location": "liaison-delite-build"
+			"name": "liaison/delite",
+			"location": "liaison-build/delite"
 		},
 		{
 			"name": "decor",
@@ -16,4 +16,4 @@ require.config({
 		}
 	]
 });
-define("liaison-delite-build/layer", ["decor-build/layer","delite-build/layer"], function(){});
+define("liaison-build/delite/layer", ["decor-build/layer","delite-build/layer"], function(){});
