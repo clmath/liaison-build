@@ -43,7 +43,7 @@
 			</div>
 		</script>
 		<script type="text/javascript">
-	require(["liaison-build/delite/boot"], function(){
+	require(["liaison/delite-build/layer"], function(){
 			require([
 				"delite/register",
 				"liaison/computed",
@@ -55,7 +55,7 @@
 				function startup(){
 					var seq = 0;
 					register("liaison-sample-collection", [HTMLElement, Widget], wrapper.wrap({
-						buildRendering: createRenderer(document.getElementById("collection-template").innerHTML),
+						render: createRenderer(document.getElementById("collection-template").innerHTML),
 						baseClass: "liaison-sample-collection",
 						addItem: function (event, detail, sender) {
 							this.items.push({id: seq++, Name: this.newName});

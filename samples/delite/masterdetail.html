@@ -23,7 +23,7 @@
 			</div>
 		</script>
 		<script type="text/javascript">
-	require(["liaison-build/delite/boot"], function(){
+	require(["liaison/delite-build/layer"], function(){
 			require([
 				"delite/register",
 				"liaison/wrapper",
@@ -34,7 +34,7 @@
 				function startup() {
 					var seq = 0;
 					register("liaison-sample-masterdetail", [HTMLElement, Widget], wrapper.wrap({
-						buildRendering: createRenderer(document.getElementById("masterdetail-template").innerHTML),
+						render: createRenderer(document.getElementById("masterdetail-template").innerHTML),
 						baseClass: "liaison-sample-masterdetail",
 						items: [
 							{

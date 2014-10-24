@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../css/samples.css">
+		<style type="text/css">
+			.d-progress-bar {
+				width: 30ex;
+			}
+		</style>
+		<script type="text/javascript" src="../../../requirejs/require.js" data-main="../../../"></script>
+		<script type="text/javascript">
+	require(["liaison/delite-build/layer"], function(){
+			require([
+				"liaison/ObservablePath",
+				"liaison/computed",
+				"liaison/wrapper",
+				"deliteful/ProgressBar",
+				"deliteful/ProgressIndicator",
+				"deliteful/Slider",
+				"liaison/DOMTreeBindingTarget",
+				"liaison/delite/templateBinderExtension",
+				"liaison/delite/widgets/RadioButton",
+				"liaison/delite/widgets/StarRating"
+			], function (ObservablePath, computed, wrapper) {
+				function startup() {
+					var REGEXP_NUMBER_BINDING = /^number:(.*)$/,
+						origCreateBindingSourceFactory = Element.prototype.createBindingSourceFactory;
+					Element.prototype.createBindingSourceFactory = function (target) {
+						var factory = origCreateBindingSourceFactory && origCreateBindingSourceFactory.apply(this, arguments);
+						if (!factory) {
+							var match = REGEXP_NUMBER_BINDING.exec(target);
+							if (match) {
+								var path = match[1];
+								return function (model) {
+									return new ObservablePath(model, path, function (value) {
+										return value + "";
+									}, function (value) {
+										return +value;
+									});
+								}
+							}
+						} else {
+							return factory;
+						}
+					};
+					document.getElementById("main-template").bind("bind", wrapper.wrap({
+						numberType: /trident/i.test(navigator.userAgent) ? "" : "number",
+						num: 3,
+						max: 5,
+						nums: computed(function (max) {
+							return Array.apply(undefined, new Array(+max + 1)).map(function (entry, i) {
+								return {
+									$$: this,
+									num: i
+								};
+							}, this);
+						}, "max"),
+						percent: computed(function (num, max) {
+							return num / max * 100;
+						}, "num", "max"),
+						disabled: false,
+						active: computed(function (disabled) {
+							return !disabled;
+						}, "disabled"),
+						readOnly: false
+					}));
+				}
+				document.body ? startup() : window.addEventListener("DOMContentLoaded", startup);
+			});
+		
+	});
+	</script>
+	</head>
+	<body>
+		<template id="main-template">
+			<div>
+				<span class="cell">Disabled:</span>
+				<input type="checkbox" checked="{{disabled}}">
+			</div>
+			<div>
+				<span class="cell">Read only:</span>
+				<input type="checkbox" checked="{{readOnly}}">
+			</div>
+			<div>
+				<span class="cell">Value:</span>
+				<input type="{{numberType}}" value="{{number:num}}" disabled?="{{disabled}}" readOnly?="{{readOnly}}">
+			</div>
+			<div>
+				<span class="cell">Max:</span>
+				<input type="{{numberType}}" value="{{number:max}}" disabled?="{{disabled}}" readOnly?="{{readOnly}}">
+			</div>
+			<div>
+				<span class="cell">Radio buttons:</span>
+				<template repeat="{{nums}}">
+					<input is="d-l-radiobutton" name="group" value="{{number:num}}" current="{{number:$$.num}}" disabled?="{{$$.disabled}}">
+				</template>
+			</div>
+			<div>
+				<span class="cell">Star rating:</span>
+				<d-l-star-rating value="{{num}}" max="{{max}}" disabled="{{disabled}}" readOnly="{{readOnly}}"></d-l-star-rating>
+			</div>
+			<div>
+				<span class="cell">Slider:</span>
+				<d-slider value="{{number:num}}" min="0" max="{{number:max}}" step="1" disabled="{{disabled}}" readOnly="{{readOnly}}"></d-slider>
+			</div>
+			<!--
+			<div>
+				<span class="cell">Progress indicator:</span>
+				<d-progress-indicator value="{{percent}}" active="{{active}}"></d-progress-indicator>
+			</div>
+			-->
+			<div>
+				<span class="cell">Progress bar:</span>
+				<d-progress-bar value="{{num}}" max="{{max}}"></d-progress-bar>
+			</div>
+		</template>
+	</body>
+</html>

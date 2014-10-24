@@ -3,10 +3,10 @@
   "version": "0.1.0-dev",
   "dependencies": {
     "requirejs": "2.1.x",
-    "decor-build": ">=0.2.0-beta",
-    "delite-build": ">=0.2.0-beta"
+    "decor-build": "0.3.x",
+    "delite-build": "0.4.x"
   },
   "devDependencies": {
-    "liaison": "0.1.0-dev"
+    "liaison/delite": "0.1.0-dev"
   }
 }
