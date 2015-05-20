@@ -1,9 +1,9 @@
 {
   "name": "liaison-build",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "dependencies": {
     "requirejs": "2.1.x",
-    "decor-build": "0.4.x"
+    "decor-build": "0.6.x"
   },
   "ignore": [
     ".jshintrc",
@@ -13,6 +13,6 @@
     "CONTRIBUTING.md"
   ],
   "devDependencies": {
-    "liaison": "0.1.5"
+    "liaison": "0.1.6"
   }
 }
